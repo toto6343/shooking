@@ -1,14 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import styles from './Header.module.css';
 
-const Header = ({ cartCount, onCartClick }) => {
+const Header = () => {
+  const { cartCount } = useCart();
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <h1 className={styles.logo} onClick={() => window.location.reload()} style={{ cursor: 'pointer' }}>
+        <Link to="/" className={styles.logo}>
           SHOOKING
-        </h1>
-        <div className={styles.cart} onClick={onCartClick} style={{ cursor: 'pointer' }}>
+        </Link>
+        <Link to="/cart" className={styles.cart}>
           <svg 
             className={styles.cartIcon} 
             fill="none" 
@@ -25,7 +29,7 @@ const Header = ({ cartCount, onCartClick }) => {
           {cartCount > 0 && (
             <span className={styles.cartCount}>{cartCount}</span>
           )}
-        </div>
+        </Link>
       </div>
     </header>
   );

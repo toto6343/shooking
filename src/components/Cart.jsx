@@ -1,7 +1,12 @@
 import React from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import styles from './Cart.module.css';
 
-const Cart = ({ cartItems, products, onUpdateQuantity, onRemove, onBack, onCheckout }) => {
+const Cart = ({ products, onCheckout }) => {
+  const navigate = useNavigate();
+  const { cartItems, updateQuantity } = useCart();
+  
   const cartProductIds = Object.keys(cartItems).map(Number);
   const cartProducts = products.filter((product) => cartProductIds.includes(product.id));
   
@@ -19,7 +24,7 @@ const Cart = ({ cartItems, products, onUpdateQuantity, onRemove, onBack, onCheck
   return (
     <div className={styles.cartPage}>
       <header className={styles.header}>
-        <button className={styles.backButton} onClick={onBack}>
+        <button className={styles.backButton} onClick={() => navigate(-1)}>
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className={styles.icon}>
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -31,7 +36,7 @@ const Cart = ({ cartItems, products, onUpdateQuantity, onRemove, onBack, onCheck
         {cartProducts.length === 0 ? (
           <div className={styles.emptyCart}>
             <p>장바구니가 비어 있습니다.</p>
-            <button className={styles.goShopping} onClick={onBack}>쇼핑하러 가기</button>
+            <Link to="/" className={styles.goShopping}>쇼핑하러 가기</Link>
           </div>
         ) : (
           <>
@@ -44,14 +49,14 @@ const Cart = ({ cartItems, products, onUpdateQuantity, onRemove, onBack, onCheck
                     <p className={styles.productPrice}>{formatPrice(product.price)}원</p>
                     
                     <div className={styles.quantityControl}>
-                      <button onClick={() => onUpdateQuantity(product.id, -1)}>-</button>
+                      <button onClick={() => updateQuantity(product.id, -1)}>-</button>
                       <span>{cartItems[product.id]}</span>
-                      <button onClick={() => onUpdateQuantity(product.id, 1)}>+</button>
+                      <button onClick={() => updateQuantity(product.id, 1)}>+</button>
                     </div>
                   </div>
                   <button 
                     className={styles.removeButton} 
-                    onClick={() => onRemove(product.id)}
+                    onClick={() => updateQuantity(product.id, -cartItems[product.id])}
                   >
                     삭제
                   </button>

@@ -1,8 +1,20 @@
 import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import styles from './ProductDetail.module.css';
 
-const ProductDetail = ({ product, allProducts, isInCart, onToggleCart, onBack }) => {
-  const relatedProducts = allProducts
+const ProductDetail = ({ products }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { cartItems, toggleCart } = useCart();
+  
+  const product = products.find((p) => p.id === parseInt(id));
+  
+  if (!product) return <div>상품을 찾을 수 없습니다.</div>;
+
+  const isInCart = !!cartItems[product.id];
+
+  const relatedProducts = products
     .filter((p) => p.brand === product.brand && p.id !== product.id)
     .slice(0, 4);
 
@@ -11,7 +23,7 @@ const ProductDetail = ({ product, allProducts, isInCart, onToggleCart, onBack })
   return (
     <div className={styles.detailPage}>
       <header className={styles.header}>
-        <button className={styles.backButton} onClick={onBack}>
+        <button className={styles.backButton} onClick={() => navigate(-1)}>
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className={styles.icon}>
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -35,7 +47,7 @@ const ProductDetail = ({ product, allProducts, isInCart, onToggleCart, onBack })
             </div>
             <button 
               className={`${styles.cartButton} ${isInCart ? styles.active : ''}`}
-              onClick={() => onToggleCart(product.id)}
+              onClick={() => toggleCart(product.id)}
             >
               {isInCart ? '장바구니에서 제거' : '장바구니 담기'}
             </button>
@@ -47,7 +59,12 @@ const ProductDetail = ({ product, allProducts, isInCart, onToggleCart, onBack })
             <h2 className={styles.sectionTitle}>연관 상품 추천</h2>
             <div className={styles.relatedGrid}>
               {relatedProducts.map((p) => (
-                <div key={p.id} className={styles.relatedCard}>
+                <div 
+                  key={p.id} 
+                  className={styles.relatedCard}
+                  onClick={() => navigate(`/product/${p.id}`)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <img src={p.image} alt={p.name} className={styles.relatedImage} />
                   <p className={styles.relatedName}>{p.name}</p>
                   <p className={styles.relatedPrice}>{formatPrice(p.price)}원</p>

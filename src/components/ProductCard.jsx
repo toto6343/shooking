@@ -1,10 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import styles from './ProductCard.module.css';
 
-const ProductCard = ({ product, isInCart, onToggleCart, onClick }) => {
+const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
+  const { cartItems, toggleCart } = useCart();
+  const isInCart = !!cartItems[product.id];
+
   const handleToggle = (e) => {
     e.stopPropagation();
-    onToggleCart(product.id);
+    toggleCart(product.id);
   };
 
   const formatPrice = (price) => {
@@ -12,7 +18,7 @@ const ProductCard = ({ product, isInCart, onToggleCart, onClick }) => {
   };
 
   return (
-    <div className={styles.card} onClick={() => onClick(product)}>
+    <div className={styles.card} onClick={() => navigate(`/product/${product.id}`)}>
       <div className={styles.imageWrapper}>
         <img 
           src={product.image} 
