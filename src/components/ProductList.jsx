@@ -2,7 +2,7 @@ import React from 'react';
 import ProductCard from './ProductCard';
 import styles from './ProductList.module.css';
 
-const ProductList = ({ products, cartItems, onToggleCart }) => {
+const ProductList = ({ products, cartItems, onToggleCart, onProductClick }) => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>신상품</h2>
@@ -13,6 +13,7 @@ const ProductList = ({ products, cartItems, onToggleCart }) => {
             product={product}
             isInCart={cartItems.includes(product.id)}
             onToggleCart={onToggleCart}
+            onClick={onProductClick}
           />
         ))}
       </div>

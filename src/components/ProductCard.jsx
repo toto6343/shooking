@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from './ProductCard.module.css';
 
-const ProductCard = ({ product, isInCart, onToggleCart }) => {
-  const handleClick = () => {
+const ProductCard = ({ product, isInCart, onToggleCart, onClick }) => {
+  const handleToggle = (e) => {
+    e.stopPropagation();
     onToggleCart(product.id);
   };
 
@@ -11,7 +12,7 @@ const ProductCard = ({ product, isInCart, onToggleCart }) => {
   };
 
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={() => onClick(product)}>
       <div className={styles.imageWrapper}>
         <img 
           src={product.image} 
@@ -26,7 +27,7 @@ const ProductCard = ({ product, isInCart, onToggleCart }) => {
         
         <button 
           className={`${styles.button} ${isInCart ? styles.buttonActive : ''}`}
-          onClick={handleClick}
+          onClick={handleToggle}
         >
           {isInCart ? '담김' : '담기'}
         </button>

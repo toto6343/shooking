@@ -1,12 +1,14 @@
 import React from 'react';
 import styles from './Header.module.css';
 
-const Header = ({ cartCount }) => {
+const Header = ({ cartCount, onCartClick }) => {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <h1 className={styles.logo}>SHOOKING</h1>
-        <div className={styles.cart}>
+        <h1 className={styles.logo} onClick={() => window.location.reload()} style={{ cursor: 'pointer' }}>
+          SHOOKING
+        </h1>
+        <div className={styles.cart} onClick={onCartClick} style={{ cursor: 'pointer' }}>
           <svg 
             className={styles.cartIcon} 
             fill="none" 
