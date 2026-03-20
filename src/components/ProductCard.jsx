@@ -10,7 +10,7 @@ const ProductCard = ({ product }) => {
 
   const handleToggle = (e) => {
     e.stopPropagation();
-    toggleCart(product.id);
+    toggleCart(product.id, product.name);
   };
 
   const formatPrice = (price) => {
