@@ -1,85 +1,87 @@
-# 슈킹(SHOOKING) 온라인 쇼핑몰 - 고도화 버전
+# 👟 슈킹(SHOOKING) - 차세대 하이브리드 스니커즈 플랫폼
+
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
 
 ## 📋 프로젝트 개요
 
-**슈킹(SHOOKING)**은 20~30대 젊은 세대를 대상으로 한 프리미엄 신발 전문 쇼핑몰입니다. 
-본 프로젝트는 초기 요구사항을 넘어 **React Router**를 통한 정교한 페이지 전환, **Context API**를 활용한 전역 상태 관리, 그리고 **사용자 경험(UX) 고도화**를 목표로 개발되었습니다.
+**슈킹(SHOOKING)**은 단순한 신발 쇼핑몰을 넘어, 몰입형 시각 경험과 소셜 커머스 기능이 결합된 **차세대 이커머스 플랫폼**입니다. 
+기존의 정적인 쇼핑 경험에서 탈피하여 **360도 뷰어**, **실시간 커뮤니티**, **AI 기반 재고 예측** 등 현대적인 기술 스택을 총망라한 엔터프라이즈급 프로토타입입니다.
 
-## ✨ 고도화된 주요 기능
+---
 
-### 1. 전역 상태 관리 및 데이터 영속성 (Advanced State Management)
-- **Context API & Custom Hooks**: `CartContext`를 통해 장바구니 상태를 전역적으로 관리합니다. 어느 페이지에서든 실시간으로 장바구니 수량을 확인하고 상품을 추가/삭제할 수 있습니다.
-- **LocalStorage 연동**: 페이지를 새로고침하거나 브라우저를 닫았다가 다시 열어도 장바구니에 담긴 상품 정보가 유지됩니다.
+## ✨ 핵심 고도화 기능 (Ultra-HD Features)
 
-### 2. 정교한 라우팅 시스템 (Professional Routing)
-- **React Router Dom (v6)** 적용:
-  - `/`: 메인 상품 목록 페이지
-  - `/product/:id`: 상품 상세 정보 페이지 (동적 라우팅)
-  - `/cart`: 장바구니 관리 페이지
-- **자연스러운 페이지 흐름**: 브라우저의 뒤로가기/앞으로가기 기능을 완벽히 지원하며, 컴포넌트 간 유기적인 데이터 흐름을 보장합니다.
+### 1. 몰입형 시각 경험 (Immersive UX)
+- **360° Interaction Mode**: 상세 페이지에서 신발을 마우스 드래그로 회전시켜 모든 각도의 디테일을 확인할 수 있는 인터랙티브 뷰어를 구현했습니다.
+- **Image Zoom & Gallery**: 고해상도 상품 이미지를 전체 화면으로 확대하여 소재와 마감을 정밀하게 탐색할 수 있습니다.
+- **Dark Mode Support**: 시스템 설정 및 수동 토글을 통한 완벽한 다크 모드 스타일링을 지원합니다.
 
-### 3. 실시간 인터랙션 피드백 (Toast Notification)
-- **토스트 알림 시스템**: 상품을 장바구니에 담거나 삭제할 때 하단에 세련된 알림 창을 띄워 사용자에게 즉각적인 피드백을 제공합니다.
-- **실시간 카운팅**: 헤더의 장바구니 아이콘에 담긴 총 수량이 실시간으로 반영됩니다.
+### 2. 소셜 커머스 및 커뮤니티 (Social & Community)
+- **Style Snap (OOTD)**: 사용자들이 직접 착용샷을 업로드하고 '좋아요'를 누르며 소통할 수 있는 인스타그램 스타일의 커뮤니티 피드를 구축했습니다.
+- **Real-time Activity Ticker**: "누군가 방금 이 상품을 구매했습니다"와 같은 실시간 알림을 통해 사회적 증거(Social Proof)를 제공합니다.
+- **Review System**: 텍스트와 별점이 포함된 영구적인 리뷰 시스템을 통해 상품 신뢰도를 확보했습니다.
 
-### 4. 상품 탐색 고도화 (Filtering & Discovery)
-- **카테고리 필터링**: 러닝화, 스니커즈, 농구화 등 카테고리별로 상품을 분류하여 탐색할 수 있는 필터 바를 제공합니다.
-- **연관 상품 추천**: 상세 페이지 하단에 동일 브랜드의 다른 상품들을 추천하여 구매 전환율을 높입니다.
+### 3. 개인화 및 비즈니스 지능 (Intelligence & Retention)
+- **AI-Driven Curation**: 사용자의 최근 탐색 이력을 분석하여 선호 브랜드 상품을 자동 추천하는 'Just for You' 섹션을 운영합니다.
+- **Membership & Points**: 구매 금액에 따른 포인트 적립 및 등급(Bronze/Silver/Gold) 시스템과 등급별 자동 할인 로직을 적용했습니다.
+- **Search Autocomplete**: 타이핑 시 실시간으로 상품명과 브랜드를 제안하여 탐색 경험을 최적화했습니다.
+- **Restock Alerts**: 품절된 사이즈에 대한 재입고 알림 신청 기능을 통해 잠재 고객을 확보합니다.
 
-### 5. 쇼핑 및 결제 프로세스 최적화 (Optimized UX)
-- **수량 조절 기능**: 장바구니 내에서 각 상품의 수량을 실시간으로 조절하고 그에 따른 금액 변화를 확인할 수 있습니다.
-- **배송비 정책**: 총 주문 금액이 **100,000원 이상 시 배송비 무료** 정책이 자동 적용됩니다.
-- **결제 모달 시스템**: 카드 번호 입력(마스킹 지원), 결제 확인, 로딩 애니메이션, 결제 완료로 이어지는 4단계 결제 시뮬레이션을 구현했습니다.
+### 4. 하이엔드 결제 및 유틸리티 (Advanced Utility)
+- **Gifting Service**: 주소 없이 연락처와 메시지만으로 간편하게 신발을 선물할 수 있는 전용 결제 프로세스를 도입했습니다.
+- **Upselling System**: 장바구니 분석을 통해 함께 구매하면 좋은 액세서리(양말, 슈케어 등)를 자동 추천합니다.
+- **Global Toast System**: 모든 상태 피드백을 세련된 애니메이션 토스트 알림으로 일원화하여 crude한 alert을 배제했습니다.
+- **Simple Payment UI**: 카카오페이, 네이버페이, 토스 등 현대적인 간편 결제 인터페이스를 완벽하게 구현했습니다.
+
+---
 
 ## 🛠 기술 스택
 
-- **Frontend**: React 18
-- **Routing**: React Router Dom
-- **State Management**: Context API
-- **Styling**: CSS Modules (Scoped CSS)
-- **Build Tool**: Vite
+| 구분 | 기술 |
+| --- | --- |
+| **Frontend** | React 18, React Router Dom v7, Framer Motion |
+| **Backend/DB** | Supabase (PostgreSQL, Auth, Real-time) |
+| **State** | Context API (User, Cart, Payment, Toast, Theme) |
+| **Data Fetching** | TanStack Query (v5) |
+| **Admin** | A/B Testing Engine, AI Inventory Prediction |
 
-## 📦 프로젝트 구조
+---
 
-```
-src/
-├── components/          # 재사용 가능한 UI 컴포넌트
-│   ├── Header           # 로고 및 장바구니 카운트
-│   ├── ProductList      # 카테고리 필터 및 그리드 레이아웃
-│   ├── ProductCard      # 상품 카드 및 담기 토글
-│   ├── ProductDetail    # 상세 정보 및 추천 상품
-│   ├── Cart             # 수량 조절 및 금액 계산
-│   └── PaymentModal     # 4단계 결제 프로세스
-├── context/
-│   └── CartContext.jsx  # 전역 상태 및 LocalStorage 로직
-├── data/
-│   └── products.js      # 고도화된 상품 메타데이터
-├── App.jsx              # 라우팅 구성 및 메인 레이아웃
-└── index.css            # 글로벌 테마 변수 (Brand Color)
-```
+## 📦 데이터베이스 스키마 (`supabase_schema.sql`)
 
-## 🎨 디자인 가이드
+프로젝트는 다음 테이블들을 기반으로 유기적으로 작동하며, 전체 스키마는 루트의 `supabase_schema.sql`에 정의되어 있습니다.
+- `products`: 상품 마스터 데이터 및 실시간 재고 정보
+- `profiles`: 사용자 포인트, 등급, 기본 정보
+- `orders`: 일반/선물 주문 내역 및 배송 정보
+- `reviews`: 사용자 별점 및 상품 후기
+- `style_snaps`: 유저 착용샷 및 좋아요 데이터
+- `wishlist`: 찜한 상품 목록
+- `restock_alerts`: 재입고 알림 예약 데이터
 
-- **Primary Color**: `#000000` (Modern Black)
-- **Accent Color**: `#ff6b6b` (Point Red)
-- **Layout**: 2컬럼 그리드 기반의 모바일 퍼스트 반응형 레이아웃
-- **Typography**: 가독성 중심의 시스템 폰트 및 굵기 최적화
+---
 
 ## 🚀 시작하기
 
-### 설치 및 실행
+### 1. 데이터베이스 설정
+- Supabase 프로젝트 생성 후 **SQL Editor**에서 `supabase_schema.sql` 내용을 실행하여 테이블과 샘플 데이터를 생성합니다.
+
+### 2. 환경 변수 설정 (`.env`)
+```env
+VITE_SUPABASE_URL=YOUR_SUPABASE_PROJECT_URL
+VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
+```
+
+### 2. 설치 및 실행
 ```bash
-# 의존성 설치
 npm install
-
-# 개발 서버 실행
 npm run dev
-
-# 빌드
-npm run build
 ```
 
 ---
 
-**Last Updated**: 2026-03-20  
-**Version**: 2.0.0 (Advanced Version)
+**Last Updated**: 2026-03-21  
+**Version**: 4.0.0 (Ultra-Next Gen)  
+**Developer**: 김우혁 / 슈킹 플랫폼 전략팀 협업 프로젝트

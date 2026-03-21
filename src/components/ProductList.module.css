@@ -1,16 +1,37 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 1.5rem;
+}
+
+.controlsSection {
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-left: 0.25rem;
 }
 
 .filterSection {
   display: flex;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
+  gap: 0.5rem;
   overflow-x: auto;
-  padding-bottom: 0.5rem;
-  -ms-overflow-style: none;
+  padding-bottom: 0.25rem;
   scrollbar-width: none;
 }
 
@@ -18,13 +39,38 @@
   display: none;
 }
 
+.priceSection {
+  padding: 0.5rem 0.25rem;
+}
+
+.priceSlider {
+  width: 100%;
+  max-width: 300px;
+  height: 6px;
+  background: var(--gray-200);
+  border-radius: 5px;
+  appearance: none;
+  outline: none;
+}
+
+.priceSlider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
 .filterButton {
-  padding: 0.6rem 1.25rem;
-  border-radius: 25px;
-  border: 1px solid var(--border-color);
+  padding: 0.5rem 1.25rem;
+  border-radius: 40px;
+  border: 1.5px solid var(--gray-200);
   background-color: var(--secondary-color);
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 600;
   white-space: nowrap;
   transition: all 0.2s;
@@ -41,12 +87,41 @@
   border-color: var(--primary-color);
 }
 
+.sortSection {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sortSelect {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--gray-200);
+  background-color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.headerRow {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 2rem;
+}
+
 .title {
   font-size: 1.75rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-primary);
-  margin-bottom: 1.5rem;
-  text-align: center;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.count {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-left: 1rem;
 }
 
 .grid {
@@ -55,23 +130,78 @@
   gap: 1.5rem;
 }
 
+.noResults {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 5rem 0;
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+}
+
+.loadMoreSection {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+.loadMoreBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  border: 2px solid var(--primary-color);
+  background-color: transparent;
+  color: var(--primary-color);
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.loadMoreBtn:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.curationSection {
+  margin-bottom: 4rem;
+  padding: 2rem;
+  background-color: var(--gray-100);
+  border-radius: 24px;
+}
+
+.curationTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+}
+
+.curationGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
 @media (min-width: 768px) {
   .container {
-    padding: 3rem 2rem;
+    padding: 4rem 2rem;
   }
 
   .title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    font-size: 2.25rem;
   }
 
   .grid {
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
 }
 
 @media (min-width: 1024px) {
   .grid {
+    grid-template-columns: repeat(4, 1fr);
     gap: 2.5rem;
   }
 }
@@ -82,8 +212,8 @@
   }
 
   .title {
-    font-size: 1.5rem;
-    margin-bottom: 1.25rem;
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
   }
 
   .grid {

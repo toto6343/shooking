@@ -1,16 +1,16 @@
 .header {
-  background-color: var(--secondary-color);
-  border-bottom: 1px solid var(--border-color);
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
   position: sticky;
   top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  width: 100%;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,51 +19,241 @@
 .logo {
   font-size: 1.5rem;
   font-weight: 800;
-  letter-spacing: 0.05em;
-  color: var(--primary-color);
+  letter-spacing: 0.1em;
+  color: var(--secondary-color);
+  text-transform: uppercase;
+  flex-shrink: 0;
 }
 
-.cart {
+.communityLink {
+  margin-left: 2rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+
+.communityLink:hover {
+  opacity: 1;
+}
+
+.searchForm {
+  flex: 1;
+  max-width: 500px;
+  margin: 0 1.5rem;
+}
+
+.searchContainer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.6rem 2.5rem 0.6rem 1rem;
+  border-radius: 20px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.searchButton {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--secondary-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+}
+
+.suggestions {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 2000;
+}
+
+[data-theme='dark'] .suggestions {
+  background-color: #1e1e1e;
+}
+
+.suggestionItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.suggestionItem:hover {
+  background-color: var(--gray-100);
+}
+
+.suggestionImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+  background-color: var(--gray-100);
+}
+
+.suggestionInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.suggestionName {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.suggestionBrand {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.navIcons {
+
+  width: 18px;
+  height: 18px;
+}
+
+.navIcons {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.navLink {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.25rem;
+  color: var(--secondary-color);
+  transition: opacity 0.2s;
 }
 
-.cartIcon {
-  width: 28px;
-  height: 28px;
-  color: var(--primary-color);
+.navLink:hover {
+  opacity: 0.8;
+}
+
+.navIcon {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
 }
 
 .cartCount {
   position: absolute;
-  top: 0;
-  right: 0;
-  background-color: var(--accent-color);
+  top: -8px;
+  right: -8px;
+  background-color: #ff3b30;
   color: white;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  min-width: 20px;
-  height: 20px;
-  border-radius: 10px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 6px;
-  animation: scaleIn 0.2s ease-out;
+  padding: 0 4px;
+  border: 2px solid var(--primary-color);
 }
 
-@keyframes scaleIn {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
+.themeBtn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  font-size: 1.2rem;
+  padding: 0.25rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  width: 36px;
+  height: 36px;
+}
+
+.themeBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 0.5rem;
+}
+
+.userName {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+.logoutBtn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: var(--secondary-color);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.logoutBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.loginBtn {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 0.5rem 1.25rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 0.5rem;
+  transition: opacity 0.2s;
+}
+
+.loginBtn:hover {
+  opacity: 0.9;
 }
 
 @media (max-width: 768px) {
@@ -73,10 +263,5 @@
 
   .logo {
     font-size: 1.25rem;
-  }
-
-  .cartIcon {
-    width: 24px;
-    height: 24px;
   }
 }

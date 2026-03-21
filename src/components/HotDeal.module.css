@@ -1,0 +1,170 @@
+.container {
+  margin-bottom: 4rem;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.fire {
+  font-size: 1.5rem;
+}
+
+.label h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.card {
+  display: flex;
+  background-color: white;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid var(--primary-color);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.imageWrapper {
+  width: 250px;
+  height: 250px;
+  background-color: #f8f8f8;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.discount {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: #ff3b30;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.info {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.timeUnit {
+  background-color: #000;
+  color: #fff;
+  padding: 0.25rem 0.4rem;
+  border-radius: 4px;
+  min-width: 32px;
+  text-align: center;
+}
+
+.remaining {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-left: 0.5rem;
+}
+
+.brand {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.originalPrice {
+  font-size: 1rem;
+  color: var(--gray-400);
+  text-decoration: line-through;
+}
+
+.salePrice {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #ff3b30;
+}
+
+.stockBar {
+  margin-top: auto;
+  position: relative;
+  height: 24px;
+  background-color: var(--gray-100);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.stockProgress {
+  height: 100%;
+  background: linear-gradient(90deg, #ff3b30, #ff9500);
+}
+
+.stockLabel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #000;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+  }
+  
+  .imageWrapper {
+    width: 100%;
+    height: 200px;
+  }
+  
+  .info {
+    padding: 1.5rem;
+  }
+  
+  .name {
+    font-size: 1.25rem;
+  }
+}

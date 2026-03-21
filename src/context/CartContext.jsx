@@ -1,52 +1,66 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useToast } from './ToastContext';
 
 const CartContext = createContext();
 
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
+  const { showToast } = useToast();
   // Initialize from localStorage
   const [cartItems, setCartItems] = useState(() => {
     const saved = localStorage.getItem('shooking_cart');
     return saved ? JSON.parse(saved) : {};
   });
   
-  const [notification, setNotification] = useState(null);
-
   // Sync with localStorage
   useEffect(() => {
     localStorage.setItem('shooking_cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const showNotification = (message) => {
-    setNotification(message);
-    setTimeout(() => setNotification(null), 3000);
-  };
+  const toggleCart = (productId, productName, size) => {
+    if (!size) {
+      setCartItems((prev) => {
+        const next = { ...prev };
+        let removed = false;
+        Object.keys(next).forEach(key => {
+          if (key.startsWith(`${productId}-`)) {
+            delete next[key];
+            removed = true;
+          }
+        });
+        if (removed) {
+          showToast(`${productName} 상품이 장바구니에서 삭제되었습니다.`, 'info');
+        }
+        return next;
+      });
+      return;
+    }
 
-  const toggleCart = (productId, productName) => {
+    const itemKey = `${productId}-${size}`;
     setCartItems((prev) => {
       const next = { ...prev };
-      if (next[productId]) {
-        delete next[productId];
-        showNotification(`${productName} 상품이 삭제되었습니다.`);
+      if (next[itemKey]) {
+        delete next[itemKey];
+        showToast(`${productName} (${size}) 상품이 삭제되었습니다.`, 'info');
       } else {
-        next[productId] = 1;
-        showNotification(`${productName} 상품이 추가되었습니다.`);
+        next[itemKey] = 1;
+        showToast(`${productName} (${size}) 상품이 추가되었습니다.`);
       }
       return next;
     });
   };
 
-  const updateQuantity = (productId, delta) => {
+  const updateQuantity = (itemKey, delta) => {
     setCartItems((prev) => {
       const next = { ...prev };
-      const currentQty = next[productId] || 0;
+      const currentQty = next[itemKey] || 0;
       const newQty = Math.max(0, currentQty + delta);
       
       if (newQty === 0) {
-        delete next[productId];
+        delete next[itemKey];
       } else {
-        next[productId] = newQty;
+        next[itemKey] = newQty;
       }
       return next;
     });
@@ -65,35 +79,9 @@ export const CartProvider = ({ children }) => {
       toggleCart, 
       updateQuantity, 
       clearCart, 
-      cartCount,
-      notification 
+      cartCount
     }}>
       {children}
-      {notification && (
-        <div style={{
-          position: 'fixed',
-          bottom: '20px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          backgroundColor: '#333',
-          color: '#fff',
-          padding: '12px 24px',
-          borderRadius: '30px',
-          fontSize: '0.9rem',
-          fontWeight: '600',
-          zIndex: 2000,
-          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-          animation: 'fadeInUp 0.3s ease-out'
-        }}>
-          {notification}
-        </div>
-      )}
-      <style>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translate(-50%, 20px); }
-          to { opacity: 1; transform: translate(-50%, 0); }
-        }
-      `}</style>
     </CartContext.Provider>
   );
 };
