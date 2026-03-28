@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence, useDragControls } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { useCart } from '../context/CartContext';
 import { useUser } from '../context/UserContext';
 import { useToast } from '../context/ToastContext';
 import { fetchProductById, fetchProducts } from '../api/productsApi';
+import { supabase } from '../api/supabase';
 import StyleSnap from './StyleSnap';
 import styles from './ProductDetail.module.css';
 
@@ -19,7 +21,6 @@ const ProductDetail = () => {
   const [rotation, setRotation] = React.useState(0);
   const dragControls = useDragControls();
 
-
   const [showSizeGuide, setShowSizeGuide] = React.useState(false);
   const [isZoomed, setIsZoomed] = React.useState(false);
   const [localReviews, setLocalReviews] = React.useState([]);
@@ -32,10 +33,10 @@ const ProductDetail = () => {
     queryFn: () => fetchProductById(id)
   });
 
-  // 로컬 리뷰 로드 -> Supabase 리뷰 로드
+  // 리뷰 로드
   useEffect(() => {
     const fetchReviews = async () => {
-      if (id) {
+      if (id && supabase) {
         const { data, error } = await supabase
           .from('reviews')
           .select('*')
@@ -50,30 +51,56 @@ const ProductDetail = () => {
 
   const handleSubmitReview = async (e) => {
     e.preventDefault();
-    if (!user) {
-      showToast('로그인이 필요한 서비스입니다.', 'info');
-      navigate('/login');
-      return;
-    }
     if (!newReview.content.trim()) return;
 
-    const { data, error } = await supabase
-      .from('reviews')
-      .insert([{
+    // SQL 스키마 연동: supabase 인스턴스가 있고 접속이 가능한지 확인
+    if (supabase && import.meta.env.VITE_SUPABASE_URL) {
+      const reviewData = {
         product_id: parseInt(id),
-        user_id: user.id,
-        user_name: profile?.name || user.email.split('@')[0],
+        user_name: user ? (user.email.split('@')[0]) : '익명사용자',
         rating: newReview.rating,
         content: newReview.content
-      }])
-      .select();
+      };
 
-    if (error) {
-      showToast('리뷰 등록 중 오류가 발생했습니다.', 'error');
-    } else {
-      setLocalReviews([data[0], ...localReviews]);
+      // 로그인 상태라면 user_id(UUID) 추가
+      if (user && user.id) {
+        reviewData.user_id = user.id;
+      }
+
+      const { data, error } = await supabase
+        .from('reviews')
+        .insert([reviewData])
+        .select();
+
+      if (error) {
+        console.error('리뷰 연동 실패:', error.message);
+        showToast('서버 연동 실패. 로컬에 저장합니다.', 'info');
+        // Fallback to local
+        const mockReview = {
+          id: Date.now(),
+          user: reviewData.user_name,
+          rating: newReview.rating,
+          content: newReview.content,
+          date: new Date().toLocaleDateString()
+        };
+        setLocalReviews([mockReview, ...localReviews]);
+      } else {
+        setLocalReviews([data[0], ...localReviews]);
+        showToast('리뷰가 서버에 등록되었습니다!');
+      }
       setNewReview({ rating: 5, content: '' });
-      showToast('리뷰가 등록되었습니다!');
+    } else {
+      // Supabase 설정이 없는 경우 순수 로컬 처리
+      const mockReview = {
+        id: Date.now(),
+        user: user ? user.email.split('@')[0] : '익명사용자',
+        rating: newReview.rating,
+        content: newReview.content,
+        date: new Date().toLocaleDateString()
+      };
+      setLocalReviews([mockReview, ...localReviews]);
+      setNewReview({ rating: 5, content: '' });
+      showToast('로컬 모드로 리뷰가 등록되었습니다.');
     }
   };
 
@@ -93,7 +120,7 @@ const ProductDetail = () => {
   });
 
   if (isError) {
-    throw error; // Let ErrorBoundary catch it
+    throw error;
   }
 
   if (isProductLoading) {
@@ -104,12 +131,24 @@ const ProductDetail = () => {
     );
   }
   
-  if (!product) return <div style={{ padding: '4rem', textAlign: 'center' }}>상품을 찾을 수 없습니다.</div>;
+  if (!product) {
+    return (
+      <div style={{ padding: '10rem 2rem', textAlign: 'center' }}>
+        <h2 style={{ marginBottom: '1rem' }}>상품을 찾을 수 없습니다.</h2>
+        <button 
+          onClick={() => navigate('/')}
+          style={{ padding: '0.8rem 1.5rem', backgroundColor: '#000', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
+        >
+          홈으로 돌아가기
+        </button>
+      </div>
+    );
+  }
 
   const itemKey = selectedSize ? `${product.id}-${selectedSize}` : null;
   const isInCart = itemKey ? !!cartItems[itemKey] : false;
 
-  const relatedProducts = allProducts
+  const relatedProducts = allProducts && product
     ? allProducts.filter((p) => p.brand === product.brand && p.id !== product.id).slice(0, 4)
     : [];
 
@@ -180,7 +219,6 @@ const ProductDetail = () => {
         <div className={styles.mainSection}>
           <motion.div 
             className={`${styles.imageSection} ${is360Mode ? styles.mode360 : ''}`}
-            layoutId={`product-image-${product.id}`}
             onClick={() => !is360Mode && setIsZoomed(true)}
             onPan={(e, info) => {
               if (is360Mode) {
@@ -266,7 +304,7 @@ const ProductDetail = () => {
                     </button>
                   );
                 })}
-
+              </div>
             </div>
 
             <div className={styles.divider}></div>
@@ -296,8 +334,8 @@ const ProductDetail = () => {
                 카카오 공유
               </button>
             </div>
-            </div>
-            </div>
+          </div>
+        </div>
 
         <div className={styles.lookbookSection}>
           <h2 className={styles.sectionTitle}>스타일 가이드</h2>
@@ -311,12 +349,11 @@ const ProductDetail = () => {
               <p>와이드 팬츠와 함께 코디하면 더욱 트렌디한 룩을 완성할 수 있습니다.</p>
             </div>
           </div>
-          </div>
+        </div>
 
-          <StyleSnap productId={id} />
+        <StyleSnap productId={id} />
 
-          {relatedProducts.length > 0 && (
-
+        {relatedProducts.length > 0 && (
           <div className={styles.relatedSection}>
             <h2 className={styles.sectionTitle}>함께 보면 좋은 상품</h2>
             <div className={styles.relatedGrid}>
@@ -370,8 +407,18 @@ const ProductDetail = () => {
           </form>
 
           <div className={styles.reviewList}>
-            {[...localReviews, ...mockReviews].map((review) => (
-              <div key={review.id} className={styles.reviewItem}>
+            {localReviews.map((review) => (
+              <div key={`rev-db-${review.id || Math.random()}`} className={styles.reviewItem}>
+                <div className={styles.reviewHeader}>
+                  <span className={styles.reviewUser}>{review.user_name || review.user}</span>
+                  <span className={styles.reviewDate}>{review.created_at ? new Date(review.created_at).toLocaleDateString() : review.date}</span>
+                </div>
+                <StarRating rating={review.rating} />
+                <p className={styles.reviewContent}>{review.content}</p>
+              </div>
+            ))}
+            {mockReviews.map((review) => (
+              <div key={`rev-mock-${review.id}`} className={styles.reviewItem}>
                 <div className={styles.reviewHeader}>
                   <span className={styles.reviewUser}>{review.user}</span>
                   <span className={styles.reviewDate}>{review.date}</span>

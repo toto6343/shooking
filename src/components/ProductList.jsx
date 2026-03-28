@@ -9,6 +9,7 @@ import RecentlyViewed from './RecentlyViewed';
 import MainBanner from './MainBanner';
 import HotDeal from './HotDeal';
 import { fetchProducts } from '../api/productsApi';
+import { useUser } from '../context/UserContext';
 import styles from './ProductList.module.css';
 
 const containerVariants = {
@@ -28,6 +29,7 @@ const itemVariants = {
 };
 
 const ProductList = () => {
+  const { user } = useUser();
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
   
