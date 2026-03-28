@@ -57,6 +57,9 @@
 - `ToastContext`: 실시간 활동(Activity Ticker) 및 시스템 피드백 알림 통합 관리.
 - `ThemeContext`: 시스템 설정 연동 및 수동 토글이 가능한 완벽한 다크 모드 지원.
 
+### 🔗 실시간 서비스 접속
+- **배포 URL**: [https://shooking-ten.vercel.app/](https://shooking-ten.vercel.app/)
+
 ---
 
 ## 🚀 시작하기
